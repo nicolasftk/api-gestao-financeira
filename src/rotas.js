@@ -2,9 +2,9 @@ const express = require("express");
 const { cadastrarUsuario, login, detalharUsuario, editarUsuario } = require("./controladores/usuarios");
 const { autenticarRota } = require("./intermediarios/autenticador");
 const { validarEmail } = require("./intermediarios/funcoesQuery");
-const { validarBody } = require("./intermediarios/validacoes");
+const { validarBody, validarBody2 } = require("./intermediarios/validacoes");
 const { listarCategoria } = require("./controladores/categoria");
-const { cadastrarTransacoes, listarTransacoes, transacaoPorId } = require("./controladores/transacoes");
+const { cadastrarTransacoes, listarTransacoes, transacaoPorId, atualizarTransacao } = require("./controladores/transacoes");
 
 const rotas = express();
 
@@ -18,5 +18,6 @@ rotas.get("/categoria", listarCategoria);
 rotas.post("/transacao", cadastrarTransacoes);
 rotas.get("/transacao", listarTransacoes);
 rotas.get("/transacao/:id", transacaoPorId);
+rotas.put("/transacao/:id", validarBody2, atualizarTransacao);
 
 module.exports = rotas;

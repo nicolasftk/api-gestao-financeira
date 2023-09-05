@@ -50,6 +50,7 @@ const listarTransacoes = async (req, res) => {
 		return res.status(500).json({ mensagem: "Erro ao listar transações." });
 	}
 };
+
 const transacaoPorId = async (req, res) => {
 	const { id } = req.params;
 	try {
@@ -72,8 +73,40 @@ const transacaoPorId = async (req, res) => {
 	}
 };
 
+const atualizarTransacao = async (req, res) => {
+	const { id } = req.params;
+	const { descricao, valor, data, categoria_id, tipo } = req.body;
+	if (tipo.toLowerCase() !== "entrada" && tipo.toLowerCase() !== "saida") {
+		return res.status(400).json({ mensagem: "O tipo deve ser registrado como entrada ou saida." });
+	}
+	try {
+		const encontrarCategoria = await pool.query(
+			`
+		select * from categorias where id = $1`,
+			[categoria_id]
+		);
+		if (encontrarCategoria.rowCount < 1) {
+			return res.status(404).json({ mensagem: "Categoria não encontrada." });
+		}
+		const atualizarDados = await pool.query(
+			`
+			update 	transacoes
+			set 	descricao = $1, valor = $2, data = $3, categoria_id = $4, tipo = $5
+			where 	id = $6 and usuario_id = $7`,
+			[descricao, valor, data, categoria_id, tipo, id, req.usuario.id]
+		);
+		if (atualizarDados.rowCount < 1) {
+			return res.status(404).json({ mensagem: "Transação não encontrada." });
+		}
+		return res.status(204).send();
+	} catch (error) {
+		console.log(error.message);
+		return res.status(500).json({ mensagem: "Erro ao atualizar transação." });
+	}
+};
 module.exports = {
 	cadastrarTransacoes,
 	listarTransacoes,
 	transacaoPorId,
+	atualizarTransacao,
 };
