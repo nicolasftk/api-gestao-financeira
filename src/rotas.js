@@ -4,7 +4,7 @@ const { autenticarRota } = require("./intermediarios/autenticador");
 const { validarEmail } = require("./intermediarios/funcoesQuery");
 const { validarBody, validarBody2 } = require("./intermediarios/validacoes");
 const { listarCategoria } = require("./controladores/categoria");
-const { cadastrarTransacoes, listarTransacoes, transacaoPorId, atualizarTransacao } = require("./controladores/transacoes");
+const { cadastrarTransacoes, listarTransacoes, transacaoPorId, atualizarTransacao, deletarTransacao } = require("./controladores/transacoes");
 
 const rotas = express();
 
@@ -19,5 +19,7 @@ rotas.post("/transacao", cadastrarTransacoes);
 rotas.get("/transacao", listarTransacoes);
 rotas.get("/transacao/:id", transacaoPorId);
 rotas.put("/transacao/:id", validarBody2, atualizarTransacao);
+rotas.delete("/transacao/:id", deletarTransacao);
+rotas.get("/transacao/extrato", listarTransacoes);
 
 module.exports = rotas;

@@ -104,9 +104,28 @@ const atualizarTransacao = async (req, res) => {
 		return res.status(500).json({ mensagem: "Erro ao atualizar transação." });
 	}
 };
+
+const deletarTransacao = async (req, res) => {
+	const { id } = req.params;
+	try {
+		const deletarDados = await pool.query(
+			`
+			delete 	from transacoes
+			where 	id = $1 and usuario_id = $2`,
+			[id, req.usuario.id]
+		);
+		if (deletarDados.rowCount < 1) {
+			return res.status(404).json({ mensagem: "Transação não encontrada." });
+		}
+		return res.status(204).send();
+	} catch (error) {
+		return res.status(500).json({ mensagem: "Erro ao deletar transação." });
+	}
+};
 module.exports = {
 	cadastrarTransacoes,
 	listarTransacoes,
 	transacaoPorId,
 	atualizarTransacao,
+	deletarTransacao,
 };
