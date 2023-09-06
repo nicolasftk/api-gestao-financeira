@@ -34,16 +34,22 @@ const cadastrarTransacoes = async (req, res) => {
 };
 
 const listarTransacoes = async (req, res) => {
+	const { filtro } = req.query;
 	try {
-		const transacoesUsuario = await pool.query(
-			`
+		let consultaSql = `
 			select	t.id, t.tipo, t.descricao, t.valor, t.data, t.usuario_id,
 					t.categoria_id, c.descricao as categoria_nome
 			from	transacoes as t
 			join	categorias as c on t.categoria_id = c.id
-			where	t.usuario_id = $1`,
-			[req.usuario.id]
-		);
+			where	t.usuario_id = $1
+			`;
+
+		const parametros = [req.usuario.id];
+		if (filtro && filtro.length >= 1) {
+			consultaSql += ` and lower(c.descricao) in (${filtro.map((filtro, index) => `$${index + 2}`).join(", ")})`;
+			parametros.push(...filtro);
+		}
+		const transacoesUsuario = await pool.query(consultaSql, parametros);
 		return res.json(transacoesUsuario.rows);
 	} catch (error) {
 		console.log(error.message);
