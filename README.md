@@ -1,6 +1,6 @@
 # API de Gestão Financeira
 
-Essa é uma plataforma de gestão financeira pessoal que permite que você controle suas finanças, acompanhe suas transações e mantenha seus gastos e receitas organizados. Este guia irá ajudá-lo a começar a usar o Dindin para alcançar seus objetivos financeiros.
+Essa é uma plataforma de gestão financeira pessoal que permite que você controle suas finanças, acompanhe suas transações e mantenha seus gastos e receitas organizados. Este guia irá ajudá-lo a começar a usar o aplicativo para alcançar seus objetivos financeiros.
 
 ## Conteúdo do Guia
 
@@ -14,7 +14,7 @@ Essa é uma plataforma de gestão financeira pessoal que permite que você contr
 
 ## 1. Cadastro de Conta
 
-Antes de começar, você precisa criar uma conta no Dindin. Siga estas etapas:
+Antes de começar, você precisa criar uma conta no aplicativo. Siga estas etapas:
 
 - Clique em "Cadastro" na página inicial.
 - Preencha seu nome, endereço de e-mail e senha.
